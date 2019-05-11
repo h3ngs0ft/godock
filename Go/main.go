@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	cnn, err := sql.Open("mysql", "docker:docker@tcp(db:3306)/test_db")
+	cnn, err := sql.Open("mysql", "docker:docker@tcp(192.168.99.100:3306)/test_db")
 	if err != nil {
 		log.Fatal(err)
 	}

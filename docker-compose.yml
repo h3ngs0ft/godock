@@ -1,5 +1,16 @@
 version: '3'
 services:
+  app:
+    build:
+      context: ./Go
+    volumes:
+      - "./Go:/go"
+    container_name: golang_app
+    ports:
+      - "8080:8080"
+    tty: true
+    depends_on:
+      - db
   db:
     build:
       context: ./MySQL
@@ -12,14 +23,13 @@ services:
     ports:
       - "3306:3306"
     tty: true
-  app:
-    build:
-      context: ./Go
-    volumes:
-      - "./Go:/go"
-    container_name: golang_app
-    ports:
-      - "80:80"
-    tty: true
-    depends_on:
-      - db
+  phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links: 
+            - db
+        ports:
+            - 3002:80
+        environment:
+            MYSQL_USER: docker
+            MYSQL_PASSWORD: docker
+            MYSQL_ROOT_PASSWORD: root
